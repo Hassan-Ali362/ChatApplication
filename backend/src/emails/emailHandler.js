@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import dotenv from "dotenv";
-import chatAppWelcomeEmail from "../templates/chatAppWelcomeEmail.js";
+import { WelcomeEmailTemplate } from "./WelcomeEmailTemplate.js";
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ export const sendWelcomeEmail = async (userEmail, username, clientUrl) => {
         from: `${sender.name} < ${sender.email}>`,
         to: userEmail,
         subject: "Welcome to ChatApp!",
-        html: chatAppWelcomeEmail(username, clientUrl)
+        html: WelcomeEmailTemplate(username, clientUrl)
     }); 
 
     if(error){

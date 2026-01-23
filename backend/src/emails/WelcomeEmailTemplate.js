@@ -1,4 +1,4 @@
-export const ChatAppWelcomeEmail = (username, clientUrl) => {
+export const WelcomeEmailTemplate = (username, clientUrl) => {
   return `
   <!DOCTYPE html>
   <html lang="en">
