@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import { generateToken } from '../lib/utils.js';
+import { sendWelcomeEmail } from '../emails/emailHandler.js';
 
 export const signupController = async (req, res) => {
     const { username, email, password } = req.body;
@@ -42,12 +43,16 @@ export const signupController = async (req, res) => {
                 email: savedUser.email,
                 profilePicture: savedUser.profilePicture
             });
-        }
-
-        // sending a welcome msg to user email
         
 
-
+            // sending a welcome msg to user email after successful signup
+            try {
+                await sendWelcomeEmail(savedUser.email, savedUser.username, process.env.CLIENT_URL);
+            } 
+            catch (error) {
+                console.error("Failed to send welcome email", error.message);
+            }
+        } 
         else{
             return res.status(500).json({message: "Failed to Sign up user"});
         }
