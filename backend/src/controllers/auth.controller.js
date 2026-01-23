@@ -39,7 +39,7 @@ export const signupController = async (req, res) => {
             console.log("User signed up successfully");
 
             generateToken(savedUser._id, res);
-
+     
             return res.status(201).json({
                 _id: savedUser._id,
                 username: savedUser.username,
