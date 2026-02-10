@@ -5,8 +5,6 @@ import messageroutes from "./src/routes/message.route.js";
 import connectDB from './src/lib/db.js';
 import cookieParser from 'cookie-parser';
 
-import arcjet, { shield, detectBot, tokenBucket } from "@arcjet/node";
-
 dotenv.config();
 
 const app = express();
