@@ -4,11 +4,16 @@ import authroutes from "./src/routes/auth.route.js";
 import messageroutes from "./src/routes/message.route.js";
 import connectDB from './src/lib/db.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  credentials: true
+}));
 
 app.use(express.json());  // before going to routes json data will be parsed here that is sent from frontend so make avaialable in req.body
 app.use(cookieParser());

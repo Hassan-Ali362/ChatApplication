@@ -1,3 +1,21 @@
 @import "tailwindcss";
-
 @plugin "daisyui";
+
+/* Required for animated conic border */
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Keyframes */
+@keyframes border {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* Animation registration for Tailwind v4 */
+@theme {
+  --animate-border: border 4s linear infinite;
+}
