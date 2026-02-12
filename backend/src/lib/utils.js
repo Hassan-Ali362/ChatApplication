@@ -17,7 +17,7 @@ export const generateToken = (userId, res) => {
     res.cookie('token', token, {
         httpOnly: true,        // cookie cannot be accessed via client-side JS (for security) otherwise they can steal cookies to hack accounts.
         secure: ENV.NODE_ENV === 'production' ? true : false,         // cookie will be sent only over HTTPS in production
-        sameSite: 'strict',
+        sameSite: ENV.NODE_ENV === 'production' ? 'strict' : 'lax', // allow cross-origin cookies in dev
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 }

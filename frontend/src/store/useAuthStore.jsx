@@ -3,7 +3,7 @@ import {axiosInstance} from '../lib/axios';
 import { toast } from 'react-hot-toast';
 
 export const useAuthStore = create((set) => ({
-    authUser: null, // Initial dummy user data
+    authUser: null,   // Initial dummy user data
     isCheckingAuth: false,
     isSigningUp: false,
     isLoggingIn: false,
@@ -13,7 +13,7 @@ export const useAuthStore = create((set) => ({
 
         try {
             const response = await axiosInstance.get("/auth/check")
-            set({ authUser: response.data });
+            set({ authUser: response.data?.id ? response.data : null });    // only  set({ authUser: response.data }); is not good because sometimes the backend returns an empty object {} or some data that doesn’t actually mean the user is logged in. In JavaScript, any object is “truthy”, even if it’s empty. So we need to check if the response contains valid user data (e.g., an id) before setting authUser, otherwise set it to null. 
         } 
         catch (error) {
             console.log("Error in checking auth:", error);

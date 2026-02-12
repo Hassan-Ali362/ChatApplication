@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route, Navigate } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router-dom'  
 import { useEffect } from 'react'
 import { useAuthStore } from './store/useAuthStore'
 import { PageLoader } from './components/PageLoader'
@@ -30,13 +30,13 @@ function App() {
       <div className='absolute bottom-0 right-4 size-80 bg-cyan-500 opacity-20  blur-[100px]'/>
 
       <Routes>
-        {/* <Route path='/' element={authUser ? <ChatApp /> : <Navigate to="/login" />} />
+        <Route path='/' element={authUser ? <ChatApp /> : <Navigate to="/login" />} />
         <Route path='/login' element={authUser ? <Navigate to="/"/> : <LoginPage />} />
-        <Route path='/signup' element={authUser ? <Navigate to="/"/> : <SignupPage />} />   */}
+        <Route path='/signup' element={authUser ? <LoginPage /> : <SignupPage />} />  
 
-        <Route path='/' element={<ChatApp />} />
+        {/* <Route path='/' element={<ChatApp />} />
         <Route path='/login' element={ <LoginPage />} />
-        <Route path='/signup' element={ <SignupPage />} /> 
+        <Route path='/signup' element={ <SignupPage />} />  */}
       </Routes>
 
     </div>
