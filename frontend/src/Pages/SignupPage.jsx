@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useAuthStore } from '../store/useAuthStore'
-import { LoaderIcon, MessageCircleIcon } from "lucide-react";
+import { LoaderIcon, MessageCircleIcon, LockIcon, UserIcon, MailIcon } from "lucide-react";
 import { BorderAnimatedContainer } from "../components/BorderAnimatedContainer";
-import { UserIcon } from "lucide-react";
-import { MailIcon } from "lucide-react";
 import { Link } from "react-router";
 
 export const SignupPage = () => {
@@ -41,7 +39,7 @@ export const SignupPage = () => {
                   <div>
                     <label className="auth-input-label">Full Name</label>
                     <div className="relative">
-                      <MailIcon className="auth-input-icon" />
+                      <UserIcon className="auth-input-icon" />
                       <input
                         type="text"
                         value={formData.username}
@@ -75,7 +73,7 @@ export const SignupPage = () => {
                   <div>
                     <label className="auth-input-label">Password</label>
                     <div className="relative">
-                      <UserIcon className="auth-input-icon" />
+                      <LockIcon className="auth-input-icon" />
                       <input
                         type="password"
                         value={formData.password}
@@ -115,9 +113,9 @@ export const SignupPage = () => {
               {/* right side */}
               <div className="w-full md:w-1/2 p-0 flex items-center justify-center">
                 <img
-                  src="public/signup.webp"
+                  src="public/signup2.webp"
                   alt="Signup illustration"
-                  className="w-3.5/4 h-3.5/4"
+                  className="w-4/5 h-4/5"
                 />
             </div>
           </div>
