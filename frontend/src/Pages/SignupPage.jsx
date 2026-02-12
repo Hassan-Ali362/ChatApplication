@@ -115,9 +115,9 @@ export const SignupPage = () => {
               {/* right side */}
               <div className="w-full md:w-1/2 p-0 flex items-center justify-center">
                 <img
-                  src="public/sign-up.png"
+                  src="public/signup.webp"
                   alt="Signup illustration"
-                  className="w-full h-full"
+                  className="w-3.5/4 h-3.5/4"
                 />
             </div>
           </div>
