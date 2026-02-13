@@ -2,48 +2,53 @@ import {create} from 'zustand';
 import {axiosInstance} from '../lib/axios';
 import { toast } from 'react-hot-toast';
 
-export const useChatStore = create((set) => ({
-    conversations: [],
-    isLoadingConversations: false,
+export const useChatStore = create((set, get) => ({
+    allContacts: [],
+    chats: [],
+    messages: {},
+    activeTab: "Chats",
+    selectedUser: null,
+    isUserLoading: false,
+    isMessagesLoading: false,
 
-    fetchConversations: async () => {
-        set({ isLoadingConversations: true });
+    isSoundEnbaled: localStorage.getItem("isSoundEnabled") === "true" ? true : false,
+
+    toggleSound: () => {
+        localStorage.setItem("isSoundEnabled", !get().isSoundEnbaled);
+        set({ isSoundEnbaled: !get().isSoundEnbaled });
+    },
+
+    setActiveTab: (tab) => set({ activeTab: tab }),
+
+    setSelectedUser: (user) => set({ selectedUser: user }),
+
+    getAllContacts: async () => {
+        set({ isUserLoading: true });
         try {
-            const response = await axiosInstance.get("/conversations");
-            set({ conversations: response.data });
-            toast.success("Conversations loaded successfully!");
+            const response = await axiosInstance.get("/messages/contacts");
+            const data = response.data;
+            set({ allContacts: data });
+            toast.success("Contacts fetched successfully!");
         }
         catch (error) {
-            toast.error("Failed to load conversations!");
-            console.log("Error in fetching conversations:", error);
-            set({ conversations: [] });
+            console.log("Error in fetching contacts:", error);
+            toast.error("Failed to fetch contacts!");
         }
         finally {
-            set({ isLoadingConversations: false });
+            set({ isUserLoading: false });
         }
     },
 
-    createConversation: async (data) => {
+    getMyChatPartners: async () => {
         try {
-            const response = await axiosInstance.post("/conversations", data);
-            set((state) => ({ conversations: [...state.conversations, response.data] }));
-            toast.success("Conversation created successfully!");
-        }
+           const response = await axiosInstance.get("/api/chats");
+           const data = response.data;
+           set({ chats: data });
+           toast.success("My partners fetched successfully!");
+        } 
         catch (error) {
-            toast.error("Failed to create conversation!");
-            console.log("Error in creating conversation:", error);
+            console.log("Error in fetching my partners:", error);
+            toast.error("Failed to fetch my partners!");
         }
-    },
-
-    deleteConversation: async (conversationId) => {
-        try {
-            await axiosInstance.delete(`/conversations/${conversationId}`);
-            set((state) => ({ conversations: state.conversations.filter(c => c.id !== conversationId) }));
-            toast.success("Conversation deleted successfully!");
-        }
-        catch (error) {
-            toast.error("Failed to delete conversation!");
-            console.log("Error in deleting conversation:", error);
-        }
-    },
+    }
 }));
