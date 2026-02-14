@@ -1,38 +1,58 @@
 import { useState, useRef } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
-import { LogOutIcon, Volume2Icon, VolumeOffIcon } from "lucide-react";
+import { LogOutIcon, Volume2Icon, VolumeOffIcon, Volume1Icon} from "lucide-react";
 
-const mouseClickSound = new Audio("/sounds/mouseClickSound.mp3");  // Creates an audio instance, Preload the sound and keep it ready to play. This is browser JavaScript, not React-specific.
 
 export const ProfileHeader = () => {
   const { logout, authUser, updateProfile } = useAuthStore();  // authUser is the current authenticated user, logout is a function to log out the user, and updateProfile is a function to update the user's profile information. These are all provided by the useAuthStore hook, which manages authentication state and actions in the application.
   const { isSoundEnabled, toggleSound } = useChatStore();  
   const [selectedImg, setSelectedImg] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
 
   const fileInputRef = useRef(null);  // This creates a reference to the file input element --> <input type="file" />., allowing us to programmatically trigger a click on it when the user clicks the avatar button.
+
+  const soundRef = useRef(new Audio("/sounds/mouseClickSound.mp3"));
 
   const handleImageClick = () => {    // fileInputRef.current will point to the actual DOM element. When we call fileInputRef.current.click(), it simulates a click on the hidden file input, which opens the file picker dialog for the user to select an image.
     fileInputRef.current.click();
   };
  
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];    // Gets selected file from input. e.target.files[0], which gives us the first file in the list of selected files (since we only allow one file to be selected with accept="image/*"). 
-    if (file) {
-      const reader = new FileReader();  // Creates a new FileReader instance to read the selected file. The FileReader API allows us to read the contents of files stored on the user's computer asynchronously, without blocking the main thread. In this case, we use it to read the selected image file as a data URL, which can be used to display the image in the UI and send it to the server for updating the user's profile picture.
-      reader.readAsDataURL(file);  // Reads the selected file as a data URL (base64 encoded string). This allows us to display the image immediately in the UI and also send it to the server for updating the user's profile picture.
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-      reader.onloadend = async () => {
-        setSelectedImg(reader.result);
-        updateProfile({ profilePic: reader.result });
-      };
+    // Preview instantly
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setSelectedImg(reader.result);
+    };
+
+    try {
+      setUploading(true);
+
+      // Send file to backend (which uploads to Cloudinary)
+      const formData = new FormData();
+      formData.append("profilePicture", file);
+
+      // Call updateProfile in useAuthStore (it handles multipart/form-data)
+      await updateProfile(formData);
+
+      setUploading(false);
+    } 
+    catch (err) {
+      console.error("Upload failed:", err);
+      setUploading(false);
+    }
   };
 
   return (
     <>
-      <div className="p-6 border-b border-slate-700/50">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+      <div className="p-6 border-b border-slate-500/50">
+        <div className="flex items-center justify-between md:flex-row flex-col">
+          <div className="flex items-center gap-3 flex-col md:flex-row">
             {/* Avatar */}
             <div className="avatar online">
               <button
@@ -40,12 +60,12 @@ export const ProfileHeader = () => {
                 className="size-14 rounded-full overflow-hidden relative group"
               >
                 <img
-                  src={selectedImg || authUser.ProfilePic || "/avatar.png"}
+                  src={selectedImg || authUser.ProfilePic || "/default-profilepic.webp"}
                   alt="User Avatar"
                   className="object-cover w-full h-full"
                 />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <span className="text-white text-sm">Change</span>
+                <div className="absolute inset-0 bg-black/50 cursor-pointer opacity-0 hover:opacity-100 flex items-center justify-center">
+                  <span className="text-white text-sm">{uploading ? "Uploading..." : "Change"}</span>
                 </div>
               </button>
 
@@ -60,8 +80,8 @@ export const ProfileHeader = () => {
 
             {/* username and status */}
             <div>
-              <h2 className="text-lg font-semibold">{authUser.username}</h2>
-              <p className="text-xs text-slate-400">Online</p>
+              <h2 className="text-lg text-gray-100">{authUser.username}</h2>
+              <p className="text-xs text-slate-100">Online</p>
             </div>
           </div>
 
@@ -71,23 +91,23 @@ export const ProfileHeader = () => {
             {/* logout button */}
             <button
               onClick={logout}
-              className="text-slate-400 hover:text-slate-200 py-2 rounded-md text-sm"
+              className="text-slate-300 hover:text-slate-200 py-2 rounded-md text-sm cursor-pointer"
             >
               <LogOutIcon className="w-5 h-5" />
             </button>
 
             {/* sound toggle button */}
             <button
-              className="text-slate-400 hover:text-slate-200 transition-colors"
+              className="text-slate-300 hover:text-slate-100 transition-colors cursor-pointer"
               onClick={() => {
-                mouseClickSound.currentTime = 0;
-                mouseClickSound.play().catch((error) => {
+                soundRef.current.currentTime = 0;                // Resets the sound to the beginning so it can be played again immediately, even if it's already playing. This allows for rapid toggling of the sound without waiting for the previous sound to finish.
+                soundRef.current.play().catch((error) => {       // Plays the mouse click sound when the button is clicked. If the sound is already playing, it will be restarted from the beginning due to the currentTime reset. If there's an error playing the sound (e.g., due to browser autoplay policies), it will be caught and logged to the console.
                   console.log("Error playing sound:", error);
                 });
                 toggleSound();
               }}
             >
-              {isSoundEnabled ? (
+              {isSoundEnabled ? (   
                 <Volume2Icon className="w-5 h-5" />
               ) : (
                 <VolumeOffIcon className="w-5 h-5" />

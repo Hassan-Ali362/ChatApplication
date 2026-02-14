@@ -108,28 +108,31 @@ export const logoutController = (req, res) => {
 }
 
 
-// logic for update user profile
+// logic for update user profile picture
 export const updateProfileController = async (req, res) => {
-    try {
-        const { profilePicture } = req.body;
-        if(!profilePicture) {
-            return res.status(400).json({ message: "Profile picture is required" });
-        }
+  try {
+    console.log("req.file:", req.file); // <-- should not be undefined
+    if (!req.file) return res.status(400).json({ message: "Profile picture required" });
 
-        const userId = await User.findById(req.user._id);   // Get the user from database(as during signup we had put other info) using the ID available in req.user._id
+    // upload file from buffer to Cloudinary
+    const result = await cloudinary.uploader.upload(
+      `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`,
+      { folder: "profile_pictures" }
+    );
 
-        if(!userId) {
-            return res.status(404).json({ message: "User not found" });
-        }
+    // update user in DB
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { profilePicture: result.secure_url },
+      { new: true }
+    );
 
-        const uploadResponse = await clouinary.uploader.upload(profilePicture);  // Upload the profile picture to Cloudinary
-
-        const updatedUser = await User.findByIdAndUpdate(userId, { profilePicture: uploadResponse.secure_url }, { new: true });  // new: true to return the updated user document
-
-        return res.status(200).json({ updatedUser });
-    } 
-    catch (error) {
-        console.log("Error in updating profile:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
-    }   
+    return res.status(200).json(updatedUser);
+  } 
+  catch (error) {
+    console.error("Error updating profile:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
+
+
