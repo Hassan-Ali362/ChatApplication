@@ -16,7 +16,7 @@ export const ChatApp = () => {
       <BorderAnimatedContainer>
       
       {/* left side */}
-      <div className="w-80 bg-slate-800/50 backdrop-blur-sm flex flex-col">
+      <div className="sm:w-80 bg-slate-700/50 backdrop-blur-sm flex flex-col w-50">
         <ProfileHeader/>
         <ActiveTabSwitch/>
 
@@ -26,7 +26,7 @@ export const ChatApp = () => {
       </div>
 
       {/* Right side */}
-      <div className="flex-1 flex flex-col bg-slate-900/50 backdrop-blur-sm">
+      <div className="flex-1 flex flex-col bg-slate-800/50 backdrop-blur-sm">
         {selectedUser ? <ChatContainer/> : <NoConversationPlaceHolder/>}
       </div>
 
