@@ -1,12 +1,18 @@
 import { BorderAnimatedContainer } from "../components/BorderAnimatedContainer";
 import { useChatStore } from "../store/useChatStore";
+import { ProfileHeader } from "../components/ProfileHeader";
+import { ActiveTabSwitch } from "../components/ActiveTabSwitch";
+import { ChatsList } from "../components/ChatsList";
+import { ContactsList } from "../components/ContactsList";
+import { ChatContainer } from "../components/ChatContainer";
+import { NoConversationPlaceHolder } from "../components/NoConversationPlaceHolder";
 
 export const ChatApp = () => {
 
   const {activeTab, selectedUser} = useChatStore();
 
   return ( 
-    <div className='relative w-full max-w-6xl h-200 p-4'>   
+    <div className='relative w-full max-w-6xl h-200'>   
       <BorderAnimatedContainer>
       
       {/* left side */}
