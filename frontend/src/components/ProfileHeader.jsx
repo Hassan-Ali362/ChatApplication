@@ -17,7 +17,7 @@ export const ProfileHeader = () => {
   };
  
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];    // Gets selected file from input. 
+    const file = e.target.files[0];    // Gets selected file from input. e.target.files[0], which gives us the first file in the list of selected files (since we only allow one file to be selected with accept="image/*"). 
     if (file) {
       const reader = new FileReader();  // Creates a new FileReader instance to read the selected file. The FileReader API allows us to read the contents of files stored on the user's computer asynchronously, without blocking the main thread. In this case, we use it to read the selected image file as a data URL, which can be used to display the image in the UI and send it to the server for updating the user's profile picture.
       reader.readAsDataURL(file);  // Reads the selected file as a data URL (base64 encoded string). This allows us to display the image immediately in the UI and also send it to the server for updating the user's profile picture.
