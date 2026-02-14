@@ -26,7 +26,6 @@ export const ProfileHeader = () => {
         setSelectedImg(reader.result);
         updateProfile({ profilePic: reader.result });
       };
-    }
   };
 
   return (
