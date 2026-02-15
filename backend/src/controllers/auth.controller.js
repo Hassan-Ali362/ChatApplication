@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { generateToken } from '../lib/utils.js';
 import { sendWelcomeEmail } from '../emails/emailHandler.js';
 import { ENV } from '../lib/env.js';
-
+import cloudinary from "../lib/cloudinary.js"
 
 // Logic for register or signup user
 export const signupController = async (req, res) => {
@@ -111,14 +111,12 @@ export const logoutController = (req, res) => {
 // logic for update user profile picture
 export const updateProfileController = async (req, res) => {
   try {
-    console.log("req.file:", req.file); // <-- should not be undefined
     if (!req.file) return res.status(400).json({ message: "Profile picture required" });
 
-    // upload file from buffer to Cloudinary
-    const result = await cloudinary.uploader.upload(
-      `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`,
-      { folder: "profile_pictures" }
-    );
+    const file = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;  // converting img file to base64
+    const result = await cloudinary.uploader.upload(file, {    // url returned by cloudinary
+        folder: 'Avatar_images',
+    });
 
     // update user in DB
     const updatedUser = await User.findByIdAndUpdate(

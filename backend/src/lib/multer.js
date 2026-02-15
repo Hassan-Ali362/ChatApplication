@@ -1,3 +1,5 @@
+// multer is a middleware to handle extract and process file uploads (multipart/form-data) in Express.js applications.
+
 import multer from "multer";
 
 const storage = multer.memoryStorage(); // store files in memory
@@ -7,7 +9,6 @@ const upload = multer({
 });
 
 export default upload;
-
 
 
 // const upload = multer({
