@@ -60,7 +60,7 @@ export const ProfileHeader = () => {
                 className="size-14 rounded-full overflow-hidden relative group"
               >
                 <img
-                  src={selectedImg || authUser.ProfilePic || "/default-profilepic.webp"}
+                  src={selectedImg || authUser.profilePicture || "/default-profilepic.webp"}
                   alt="User Avatar"
                   className="object-cover w-full h-full"
                 />
