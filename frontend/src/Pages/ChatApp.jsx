@@ -8,30 +8,29 @@ import { ChatContainer } from "../components/ChatContainer";
 import { NoConversationPlaceHolder } from "../components/NoConversationPlaceHolder";
 
 export const ChatApp = () => {
+  const { activeTab, selectedUser } = useChatStore();
 
-  const {activeTab, selectedUser} = useChatStore();
+  return (
+    <div className="relative w-full flex justify-center items-center bg-slate-900 p-4">
+      <div className="relative w-full max-w-6xl flex h-145">
+        <BorderAnimatedContainer>
+          {/* Left Sidebar */}
+          <div className="sm:w-80 w-64 bg-slate-700/50 backdrop-blur-sm flex flex-col h-full">
+            <ProfileHeader />
+            <ActiveTabSwitch />
 
-  return ( 
-    <div className='relative w-full max-w-6xl h-200'>   
-      <BorderAnimatedContainer>
-      
-      {/* left side */}
-      <div className="sm:w-80 bg-slate-700/50 backdrop-blur-sm flex flex-col w-50">
-        <ProfileHeader/>
-        <ActiveTabSwitch className="w-full"/>
+            {/* Scrollable Chat/Contacts List */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-2">
+              {activeTab === "chats" ? <ChatsList /> : <ContactsList />}
+            </div>
+          </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">    {/* flex-1 is important to make this div take the remaining height and make it scrollable */}
-          {activeTab === "Chats" ? <ChatsList/> : <ContactsList/>}
-        </div>
+          {/* Right Chat Area */}
+          <div className="flex-1 flex flex-col bg-slate-800/50 backdrop-blur-sm h-full">
+            {selectedUser ? <ChatContainer /> : <NoConversationPlaceHolder />}
+          </div>
+        </BorderAnimatedContainer>
       </div>
-
-      {/* Right side */}
-      <div className="flex-1 flex flex-col bg-slate-800/50 backdrop-blur-sm">
-        {selectedUser ? <ChatContainer/> : <NoConversationPlaceHolder/>}
-      </div>
-
-      </BorderAnimatedContainer>
-
     </div>
-  )
-}
+  );
+};
