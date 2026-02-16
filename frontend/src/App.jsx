@@ -1,16 +1,15 @@
-import './App.css'
-import { Routes, Route, Navigate } from 'react-router-dom'  
-import { useEffect } from 'react'
-import { useAuthStore } from './store/useAuthStore'
-import { PageLoader } from './components/PageLoader'
+import "./App.css";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuthStore } from "./store/useAuthStore";
+import { PageLoader } from "./components/PageLoader";
 
-import { SignupPage } from './Pages/SignupPage'
-import { LoginPage } from './Pages/LoginPage'
-import { ChatApp } from './pages/ChatApp'
+import { SignupPage } from "./Pages/SignupPage";
+import { LoginPage } from "./Pages/LoginPage";
+import { ChatApp } from "./Pages/ChatApp";
 
 function App() {
-
-  const {checkAuth, isCheckingAuth, authUser} = useAuthStore();
+  const { checkAuth, isCheckingAuth, authUser } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
@@ -18,30 +17,37 @@ function App() {
 
   console.log("Auth User in App.jsx:", authUser);
 
-  if(isCheckingAuth) return <PageLoader />
+  if (isCheckingAuth) return <PageLoader />;
 
   return (
     <>
-    <div className='min-h-screen bg-slate-900 relative flex items-center justify-center p-4 overflow-hidden'>
-      
-      {/* background gradient */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px), linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-size-[14px_24px]"/>
-      <div className='absolute top-0 left-4 size-80 bg-pink-500 opacity-20 blur-[100px]'/>
-      <div className='absolute bottom-0 right-4 size-80 bg-cyan-500 opacity-20  blur-[100px]'/>
+      <div className="min-h-screen bg-slate-900 relative flex items-center justify-center p-4 overflow-hidden">
+        {/* background gradient */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px), linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-size-[14px_24px]" />
+        <div className="absolute top-0 left-4 size-80 bg-pink-500 opacity-20 blur-[100px]" />
+        <div className="absolute bottom-0 right-4 size-80 bg-cyan-500 opacity-20  blur-[100px]" />
 
-      <Routes>
-        <Route path='/' element={authUser ? <ChatApp /> : <Navigate to="/login" />} />
-        <Route path='/login' element={authUser ? <Navigate to="/"/> : <LoginPage />} />
-        <Route path='/signup' element={authUser ? <LoginPage /> : <SignupPage />} />  
+        <Routes>
+          <Route
+            path="/"
+            element={authUser ? <ChatApp /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={authUser ? <Navigate to="/" /> : <LoginPage />}
+          />
+          <Route
+            path="/signup"
+            element={authUser ? <LoginPage /> : <SignupPage />}
+          />
 
-        {/* <Route path='/' element={<ChatApp />} />
+          {/* <Route path='/' element={<ChatApp />} />
         <Route path='/login' element={ <LoginPage />} />
         <Route path='/signup' element={ <SignupPage />} />  */}
-      </Routes>
-
-    </div>
+        </Routes>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

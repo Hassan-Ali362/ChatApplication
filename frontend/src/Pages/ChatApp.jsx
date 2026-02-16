@@ -18,7 +18,7 @@ export const ChatApp = () => {
       {/* left side */}
       <div className="sm:w-80 bg-slate-700/50 backdrop-blur-sm flex flex-col w-50">
         <ProfileHeader/>
-        <ActiveTabSwitch/>
+        <ActiveTabSwitch className="w-full"/>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-2">    {/* flex-1 is important to make this div take the remaining height and make it scrollable */}
           {activeTab === "Chats" ? <ChatsList/> : <ContactsList/>}
