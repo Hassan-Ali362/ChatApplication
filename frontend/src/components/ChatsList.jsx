@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { UserLoadingSkeleton } from "./UserLoadingSkeleton";
-import { NoChatsFound } from "../components/noChatsFound";
+import NoChatsFound from "../components/NoChatsFound"
 
 export const ChatsList = () => {
   const {
@@ -15,12 +15,10 @@ export const ChatsList = () => {
     getMyChatPartners();
   }, [getMyChatPartners]);
 
-  // ✅ Loading State
   if (isUsersLoading) {
     return <UserLoadingSkeleton />;
   }
 
-  // ✅ Safety Guard (Prevents Crash)
   if (!Array.isArray(chats) || chats.length === 0) {
     return <NoChatsFound />;
   }

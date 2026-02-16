@@ -1,9 +1,9 @@
 import { MessageCircleIcon } from "lucide-react"
 
-export const NochatsFound = () => {
+const NochatsFound = () => {
     return(
         <>
-        <div className="flex flex-col items-center justify-center py-10 text-center space-y-4">
+        <div className="flex flex-col items-center py-10 text-center space-y-4">
 
             <div className="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center">
                 <MessageCircleIcon className="w-8 h-8 text-cyan-400"/>
@@ -20,3 +20,5 @@ export const NochatsFound = () => {
         </>
     )
 }
+
+export default NochatsFound;
