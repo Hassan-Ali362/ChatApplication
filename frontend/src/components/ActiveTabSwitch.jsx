@@ -1,22 +1,18 @@
-// import { useChatStore } from '../store/useChatStore.jsx';
-
-// export const ActiveTabSwitch = () => {
-
-//     const {activeTab, setActiveTab} = useChatStore();
-
-//     return (
-//         <>
-//         <div className=''>
-
-//         </div>
-//         </>
-//     )  
-// }      
+import { useChatStore } from '../store/useChatStore.jsx';
 
 export const ActiveTabSwitch = () => {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <p className="text-slate-400">No conversation selected</p>
-    </div>
-  );
-};
+
+    const {activeTab, setActiveTab} = useChatStore();
+
+    return (
+        <>
+        <div className='tabs tabs-box bg-transparent p-4 justify-around'>
+
+          <button onClick={() => setActiveTab("chats")} className={`tab ${activeTab === "chats" ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400"} `}>Chats</button>
+          <button onClick={() => setActiveTab("contacts")} className={`tab ${activeTab === "contacts" ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400"} `}>Contacts</button>
+
+        </div>
+        </>
+    )  
+}      
+
