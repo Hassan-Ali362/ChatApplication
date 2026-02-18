@@ -81,7 +81,7 @@ export const ProfileHeader = () => {
             {/* username and status */}
             <div>
               <h2 className="text-lg text-gray-100">{authUser.username}</h2>
-              <p className="text-xs text-slate-100">Online</p>
+              <p className="text-xs text-cyan-500 font-semibold">Online</p>
             </div>
           </div>
 
