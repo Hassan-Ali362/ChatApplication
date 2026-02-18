@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
 import { PageLoader } from "./components/PageLoader";
 
-import { SignupPage } from "./Pages/SignupPage";
-import { LoginPage } from "./Pages/LoginPage";
-import { ChatApp } from "./Pages/ChatApp";
+import { SignupPage } from "./pages/SignupPage";
+import { LoginPage } from "./pages/LoginPage";
+import { ChatApp } from "./pages/ChatApp";
 
 function App() {
   const { checkAuth, isCheckingAuth, authUser } = useAuthStore();

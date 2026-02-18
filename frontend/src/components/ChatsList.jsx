@@ -9,11 +9,22 @@ export const ChatsList = () => {
     chats,
     isUsersLoading,
     setSelectedUser,
+    selectedUser,
+    messages,
   } = useChatStore();
 
   useEffect(() => {
     getMyChatPartners();
   }, [getMyChatPartners]);
+
+  const getLastMessage = (chatUserId) => {
+    const userMessages = messages[chatUserId] || [];
+    if (userMessages.length === 0) return "No messages yet";
+    
+    const lastMsg = userMessages[userMessages.length - 1];
+    if (lastMsg.image && !lastMsg.text) return "📷 Image";
+    return lastMsg.text?.substring(0, 30) + (lastMsg.text?.length > 30 ? "..." : "");
+  };
 
   if (isUsersLoading) {
     return <UserLoadingSkeleton />;
@@ -29,20 +40,27 @@ export const ChatsList = () => {
         <div
           key={chat._id}
           onClick={() => setSelectedUser(chat)}
-          className="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-slate-800 transition"
+          className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition ${
+            selectedUser?._id === chat._id 
+              ? 'bg-cyan-600/20 border border-cyan-500/50' 
+              : 'hover:bg-slate-800'
+          }`}
         >
-          <img
-            src={chat?.profilePicture || "/avatar.png"}
-            alt={chat?.username || "User"}
-            className="w-10 h-10 rounded-full object-cover"
-          />
+          <div className="relative">
+            <img
+              src={chat?.profilePicture || "/default-profilepic.webp"}
+              alt={chat?.username || "User"}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-700"></div>
+          </div>
 
-          <div className="flex flex-col">
-            <span className="text-white font-medium">
+          <div className="flex flex-col flex-1 min-w-0">
+            <span className="text-white font-medium truncate">
               {chat?.username || "Unknown User"}
             </span>
-            <span className="text-slate-400 text-sm">
-              Click to start chatting
+            <span className="text-slate-400 text-sm truncate">
+              {getLastMessage(chat._id)}
             </span>
           </div>
         </div>

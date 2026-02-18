@@ -14,8 +14,8 @@ export const ChatApp = () => {
     <div className="relative w-full flex justify-center items-center bg-slate-900 p-4">
       <div className="relative w-full max-w-6xl flex h-145">
         <BorderAnimatedContainer>
-          {/* Left Sidebar */}
-          <div className="sm:w-80 w-64 bg-slate-700/50 backdrop-blur-sm flex flex-col h-full">
+          {/* Left Sidebar - Hidden on mobile when chat is selected */}
+          <div className={`sm:w-80 w-full bg-slate-700/50 backdrop-blur-sm flex flex-col h-full ${selectedUser ? 'hidden md:flex' : 'flex'}`}>
             <ProfileHeader />
             <ActiveTabSwitch />
 
@@ -25,8 +25,8 @@ export const ChatApp = () => {
             </div>
           </div>
 
-          {/* Right Chat Area */}
-          <div className="flex-1 flex flex-col bg-slate-800/50 backdrop-blur-sm h-full">
+          {/* Right Chat Area - Full width on mobile when chat is selected */}
+          <div className={`flex-1 flex flex-col bg-slate-800/50 backdrop-blur-sm h-full ${selectedUser ? 'flex' : 'hidden md:flex'}`}>
             {selectedUser ? <ChatContainer /> : <NoConversationPlaceHolder />}
           </div>
         </BorderAnimatedContainer>
