@@ -13,7 +13,7 @@ const NochatsFound = () => {
                 <h4 className="text-slate-200 font-medium mb-1">No Conversations yet</h4>
                 <p className="text-slate-400 text-sm px-6">
                     start a new chat by selecting a contact from contact list tab
-                </p>
+                </p>             
             </div>
 
         </div>
