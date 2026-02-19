@@ -11,7 +11,8 @@ export const ProfileHeader = () => {
   const [uploading, setUploading] = useState(false);
 
 
-  const fileInputRef = useRef(null);  // This creates a reference to the file input element --> <input type="file" />., allowing us to programmatically trigger a click on it when the user clicks the avatar button.
+  const fileInputRef = useRef(null);  
+  // This creates a reference to the file input element --> <input type="file" />., allowing us to programmatically trigger a click on it when the user clicks the avatar button.
 
   const soundRef = useRef(new Audio("/sounds/mouseClickSound.mp3"));
 
