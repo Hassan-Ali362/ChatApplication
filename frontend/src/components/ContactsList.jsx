@@ -17,7 +17,7 @@ export const ContactsList = () => {
   }
 
   if (!allContacts || allContacts.length === 0) {
-    return <p className="text-slate-400 text-center mt-4">No contacts found</p>;
+    return <p className="text-slate-400 text-center mt-4">No  contacts  found</p>;
   }
 
   return (
