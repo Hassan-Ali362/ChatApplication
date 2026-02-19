@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { LogOutIcon, Volume2Icon, VolumeOffIcon, Volume1Icon} from "lucide-react";
-
+import defaultavatar from "../assets/default-profilepic.webp"
 
 export const ProfileHeader = () => {
   const { logout, authUser, updateProfile } = useAuthStore();  // authUser is the current authenticated user, logout is a function to log out the user, and updateProfile is a function to update the user's profile information. These are all provided by the useAuthStore hook, which manages authentication state and actions in the application.
@@ -60,7 +60,7 @@ export const ProfileHeader = () => {
                 className="size-14 rounded-full overflow-hidden relative group"
               >
                 <img
-                  src={selectedImg || authUser.profilePicture || "/default-profilepic.webp"}
+                  src={selectedImg || authUser.profilePicture || {defaultavatar}}
                   alt="User Avatar"
                   className="object-cover w-full h-full"
                 />

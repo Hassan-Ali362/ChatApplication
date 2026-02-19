@@ -3,7 +3,7 @@ import { useAuthStore } from '../store/useAuthStore'
 import { LoaderIcon, MessageCircleIcon, LockIcon, UserIcon, MailIcon } from "lucide-react";
 import { BorderAnimatedContainer } from "../components/BorderAnimatedContainer";
 import { Link } from "react-router";
-import signupImg from "../../public/signup.webp"
+import signupImg from "../assets/signup2.webp"
 
 export const SignupPage = () => {
   const [formData, setFormData] = useState({
