@@ -10,7 +10,7 @@ import { ChatApp } from "./Pages/ChatApp";
 export const App = () => {
   const { checkAuth, isCheckingAuth, authUser } = useAuthStore();
 
-  useEffect(() => {
+  useEffect(() => {         
     checkAuth();
   }, [checkAuth]);
 
