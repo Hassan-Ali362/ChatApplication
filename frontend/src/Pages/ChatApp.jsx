@@ -19,13 +19,11 @@ export const ChatApp = () => {
             <ProfileHeader />
             <ActiveTabSwitch />
 
-            {/* Scrollable Chat/Contacts List */}
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
               {activeTab === "chats" ? <ChatsList /> : <ContactsList />}
             </div>
           </div>
 
-          {/* Right Chat Area - Full width on mobile when chat is selected */}
           <div className={`flex-1 flex flex-col bg-slate-800/50 backdrop-blur-sm h-full ${selectedUser ? 'flex' : 'hidden md:flex'}`}>
             {selectedUser ? <ChatContainer /> : <NoConversationPlaceHolder />}
           </div>
