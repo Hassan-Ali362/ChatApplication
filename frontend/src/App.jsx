@@ -3,10 +3,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
 import { PageLoader } from "./components/PageLoader";
-
-import { SignupPage } from "./pages/SignupPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ChatApp } from "./pages/ChatApp";
+import { SignupPage } from "./Pages/SignupPage";
 
 function App() {
   const { checkAuth, isCheckingAuth, authUser } = useAuthStore();
