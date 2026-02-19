@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/useAuthStore'
 import { LoaderIcon, MessageCircleIcon, LockIcon, MailIcon } from "lucide-react";
 import { BorderAnimatedContainer } from "../components/BorderAnimatedContainer";
 import { Link } from "react-router";
+import loginImg from "../../public/login.webp"
 
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -95,7 +96,7 @@ export const LoginPage = () => {
               {/* right side */}
               <div className="w-full md:w-1/2 p-0 flex items-center justify-center">
                 <img
-                  src="public/login.webp"
+                  src={loginImg}
                   alt="Login illustration"
                   className="w-4/5 h-4/5"
                 />
