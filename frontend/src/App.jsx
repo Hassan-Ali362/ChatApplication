@@ -3,11 +3,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/useAuthStore";
 import { PageLoader } from "./components/PageLoader";
-import { LoginPage } from "./pages/LoginPage";
-import { ChatApp } from "./pages/ChatApp";
-import { SignupPage } from "./Pages/SignupPage";
+import { LoginPage } from "./Pages/LoginPage";
+import {SignupPage} from "./Pages/SignupPage";
+import { ChatApp } from "./Pages/ChatApp";
 
-function App() {
+export const App = () => {
   const { checkAuth, isCheckingAuth, authUser } = useAuthStore();
 
   useEffect(() => {
